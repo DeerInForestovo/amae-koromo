@@ -12,13 +12,13 @@ import Conf from "../../utils/conf";
 import { useTranslation } from "react-i18next";
 
 import "./theme";
-import RootThemeProvider from "./theme";
+import RootThemeProvider, {DarkModeProvider, useDarkMode} from "./theme";
 import { CssBaseline } from "@mui/material";
 import AdapterDayJs from "@mui/lab/AdapterDayjs";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { SnackbarProvider } from "notistack";
 import { RegisterSnackbarProvider } from "../../utils/notify";
-import { FC } from "react";
+import {FC, useEffect} from "react";
 import StarPlayerProvider from "../playerDetails/star/starPlayerProvider";
 import { Routes } from "./routes";
 import GameLinkActionsProvider from "../gameRecords/gameLinkActions";
@@ -57,11 +57,21 @@ const Providers: FC = ({ children }) => (
 
 function App() {
   const { t, i18n } = useTranslation();
+  const { isDarkMode } = useDarkMode();
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [isDarkMode]);
+
   return (
     <Providers>
       <RegisterSnackbarProvider />
       <CssBaseline />
-      <div className={"lang-" + i18n.language}>
+      <div className={`lang-${i18n.language} ${isDarkMode ? "dark" : ""}`}>
         <Router>
           <Helmet defaultTitle={t(Conf.siteTitle)} titleTemplate={`%s | ${t(Conf.siteTitle)}`} />
           <CanonicalLink />

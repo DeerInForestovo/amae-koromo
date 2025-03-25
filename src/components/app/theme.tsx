@@ -201,3 +201,48 @@ export default function RootThemeProvider({ children }: { children: ReactNode })
   );
   return <MaterialThemeProvider theme={theme}>{children}</MaterialThemeProvider>;
 }
+
+import React, { createContext, useState, useContext } from "react";
+
+// 定义类型
+interface DarkModeContextType {
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
+}
+
+// 默认值，避免未包裹 Provider 时报错
+const defaultValue: DarkModeContextType = {
+  isDarkMode: true,
+  toggleDarkMode: () => {
+    console.warn("toggleDarkMode is used outside of DarkModeProvider.");
+  },
+};
+
+// 创建上下文
+export const DarkModeContext = createContext<DarkModeContextType>(defaultValue);
+
+// Hook，组件中调用用这个
+export const useDarkMode = () => useContext(DarkModeContext);
+
+// Provider 包裹应用
+export const DarkModeProvider = ({ children }: { children: ReactNode }) => {
+  const [isDarkMode, setIsDarkMode] = useState(true);
+
+  const toggleDarkMode = () => setIsDarkMode(prev => !prev);
+
+  return (
+      <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+        {children}
+      </DarkModeContext.Provider>
+  );
+};
+
+export const DarkModeToggleButton = () => {
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
+
+  return (
+      <button onClick={toggleDarkMode}>
+        当前模式：{isDarkMode ? "🌙 暗" : "☀️ 亮"}（点击切换）
+      </button>
+  );
+};

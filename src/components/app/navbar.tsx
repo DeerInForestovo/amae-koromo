@@ -24,7 +24,7 @@ import {
   ThemeOptions,
 } from "@mui/material";
 import { ArrowDropDown, Language, GitHub, Twitter, Menu as MenuIcon } from "@mui/icons-material";
-import { OverrideTheme } from "./theme";
+import {DarkModeToggleButton, OverrideTheme} from "./theme";
 import clsx from "clsx";
 import { NavLink, NavLinkProps } from "react-router-dom";
 import NavButton from "../misc/navButton";
@@ -130,6 +130,7 @@ function DesktopItems() {
       <IconButton href="https://github.com/SAPikachu/amae-koromo">
         <GitHub />
       </IconButton>
+      <DarkModeToggleButton />
     </>
   );
 }

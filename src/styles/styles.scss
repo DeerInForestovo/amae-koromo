@@ -17,6 +17,10 @@ body {
 body {
   background: transparent;
 }
+body.dark {
+  background-color: #121212;
+  color: white;
+}
 body::before {
   content: "";
   display: block;
@@ -33,6 +37,26 @@ body::before {
   z-index: -1;
   background-image: var(--background-image);
 }
+body.dark::before {
+  content: "";
+  display: block;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  bottom: 0;
+  z-index: -1;
+
+  background-image: var(--background-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  background-color: rgba(0, 0, 0, 0.6);
+  background-blend-mode: darken;
+}
 /* } */
 .koromo {
   --background-image: url(../assets/img/koromo.jpg);
@@ -43,6 +67,30 @@ body::before {
 .yuuki {
   --background-image: url(../assets/img/yuuki.jpg);
 }
+
+/* 其它暗模式样式调整 */
+.dark .ReactVirtualized__Table__row.even {
+  background-color: rgba(255, 255, 255, 0.05); /* 深色模式下的表格奇偶行背景色 */
+}
+
+.dark .ReactVirtualized__Table__headerRow,
+.dark .ReactVirtualized__Table__row {
+  border-top: 1px solid #444; /* 深色模式下的表格边框颜色 */
+}
+
+/* 在 dark 模式下的动态内容样式 */
+.dark .ReactVirtualized__Table__row.loading {
+  background: linear-gradient(to right, #333 8%, #444 18%, #333 33%);
+}
+
+.dark svg.recharts-surface {
+  overflow: visible;
+}
+
+.dark .recharts-pie-sector .recharts-sector.selectable:hover {
+  opacity: 0.5; /* 改变在暗模式下的交互效果 */
+}
+
 #root {
   overflow: hidden;
 }

@@ -20,6 +20,7 @@ import { SentryErrorBoundary } from "./utils/sentry";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import Conf from "./utils/conf";
+import {DarkModeProvider} from "./components/app/theme";
 dayjs.extend(utc);
 
 if (location.host === "amae-koromo.vercel.app") {
@@ -30,7 +31,9 @@ const rootElement = document.getElementById("root");
 render(
   <SentryErrorBoundary>
     <Suspense fallback={<Loading />}>
-      <App />
+      <DarkModeProvider>
+        <App />
+      </DarkModeProvider>
     </Suspense>
   </SentryErrorBoundary>,
   rootElement
